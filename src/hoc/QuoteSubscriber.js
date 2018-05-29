@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { requestQuote } from '../utils/api'
+import { Quote } from '../components/Quote'
 
 function withFakeQuoteSubscription(WrappedComponent) {
   return class extends Component {
@@ -19,7 +20,7 @@ function withFakeQuoteSubscription(WrappedComponent) {
     }
 
     render() {
-      return <WrappedComponent quote={this.state.quote} {...this.props} />
+      return <WrappedComponent message={this.state.quote} {...this.props} />
     }
   }
 }
@@ -44,18 +45,10 @@ function withQuoteSubscription(WrappedComponent) {
     }
 
     render() {
-      return <WrappedComponent quote={this.state.quote} {...this.props} />
+      return <WrappedComponent message={this.state.quote} {...this.props} />
     }
   }
 }
 
-class QuoteDisplay extends Component {
-  render() {
-    return (
-      <h1>{this.props.quote}</h1>
-    )
-  }
-}
-
-export const QuoteSubscriber = withQuoteSubscription(QuoteDisplay)
-export const FakeQuoteSubscriber = withFakeQuoteSubscription(QuoteDisplay)
+export const QuoteSubscriber = withQuoteSubscription(Quote)
+export const FakeQuoteSubscriber = withFakeQuoteSubscription(Quote)

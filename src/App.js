@@ -4,6 +4,9 @@ import './App.css';
 import { ContextProvider } from './utils/context'
 import Render from './render'
 import HOC from './hoc'
+import { Quote } from './components/Quote'
+import { DefaultCard } from './components/DefaultCard'
+import { Card } from './components/Card'
 
 export const UserContext = React.createContext({ id: 1, name: 'Anonymous User'})
 
@@ -16,42 +19,37 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
             <h1 className="App-title">Welcome to React</h1>
           </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
-          <h3>Datastore Connections</h3>
-          <HOC.QuoteSubscriber />
-          <HOC.FakeQuoteSubscriber />
-          <Render.QuoteSubscriber
-            render={(quote) => (
-              <h1>{quote}</h1>
-            )}
-          />
+          <div className="container">
+            <h3>Datastore Connections</h3>
+            <HOC.QuoteSubscriber />
+            <HOC.FakeQuoteSubscriber />
+            <Render.QuoteSubscriber
+              render={(quote) => (
+                <Quote message={quote} />
+              )}
+            />
 
-          <hr />
+            <hr />
 
-          <h3>Conditional Rendering</h3>
-          <Render.ConditionalRenderer
-            test={false}
-            render={() => (
-              <h1>This component should be conditionally rendered</h1>
-            )}
-          />
-          <Render.ConditionalRendererWithDefault
-            test={true}
-            defaultComponent={() => (
-              <h1>This is the default component</h1>
-            )}
-            render={() => (
-              <h1>This component should be conditionally rendered</h1>
-            )}
-          />
+            <h3>Conditional Rendering</h3>
+            <Render.ConditionalRenderer
+              test={false}
+              render={() => (
+                <h1>This component should be conditionally rendered</h1>
+              )}
+            />
+            <Render.ConditionalRendererWithDefault
+              test={true}
+              defaultComponent={() => <DefaultCard />}
+              render={() => <Card imageSrc="https://via.placeholder.com/350x200" content="This is some content" />}
+            />
+
+            <hr />
+
+            <h3>Context Subscription</h3>
+            <HOC.CurrentUserSubscriber />
+          </div>
         </div>
-
-        <hr />
-
-        <h3>Context Subscription</h3>
-        <HOC.CurrentUserSubscriber />
       </ContextProvider>
     );
   }
