@@ -16,7 +16,13 @@ class App extends Component {
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
         <HOC.QuoteSubscriber />
-
+        <HOC.FakeQuoteSubscriber />
+        
+        <Render.QuoteSubscriber
+          render={(quote) => (
+            <h1>{quote}</h1>
+          )}
+        />
         
         <Render.ConditionalRenderer
           test={false}

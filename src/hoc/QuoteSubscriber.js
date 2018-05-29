@@ -1,7 +1,28 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch'
+import { requestQuote } from '../utils/api'
 
-const quoteUrl = "https://4ozc0qiiec.execute-api.us-east-1.amazonaws.com/prod/quote";
+function withFakeQuoteSubscription(WrappedComponent) {
+  return class extends Component {
+    constructor(props) {
+      super(props)
+      this.state = {
+        quote: null
+      }
+    }
+
+    componentDidMount() {
+      setTimeout(() => {
+        this.setState({
+          quote: "Guy Fieri did not say this."
+        })
+      }, 1000)
+    }
+
+    render() {
+      return <WrappedComponent quote={this.state.quote} {...this.props} />
+    }
+  }
+}
 
 function withQuoteSubscription(WrappedComponent) {
   return class extends Component {
@@ -13,7 +34,7 @@ function withQuoteSubscription(WrappedComponent) {
     }
 
     componentDidMount() {
-      fetch(quoteUrl)
+      requestQuote()
         .then(resp => resp.json())
         .then(json => {
           this.setState({
@@ -37,3 +58,4 @@ class QuoteDisplay extends Component {
 }
 
 export const QuoteSubscriber = withQuoteSubscription(QuoteDisplay)
+export const FakeQuoteSubscriber = withFakeQuoteSubscription(QuoteDisplay)
