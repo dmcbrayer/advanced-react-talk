@@ -21,33 +21,14 @@ class App extends Component {
           </header>
           <div className="container">
             <h3>Datastore Connections</h3>
-            <HOC.QuoteSubscriber />
-            <HOC.FakeQuoteSubscriber />
-            <Render.QuoteSubscriber
-              render={(quote) => (
-                <Quote message={quote} />
-              )}
-            />
 
             <hr />
 
             <h3>Conditional Rendering</h3>
-            <Render.ConditionalRenderer
-              test={false}
-              render={() => (
-                <h1>This component should be conditionally rendered</h1>
-              )}
-            />
-            <Render.ConditionalRendererWithDefault
-              test={true}
-              defaultComponent={() => <DefaultCard />}
-              render={() => <Card imageSrc="https://via.placeholder.com/350x200" content="This is some content" />}
-            />
 
             <hr />
 
             <h3>Context Subscription</h3>
-            <HOC.CurrentUserSubscriber />
           </div>
         </div>
       </ContextProvider>
